@@ -44,7 +44,7 @@ static const struct luaL_Reg lib [] = {
 };
 
 int 
-luaopen_shelves(lua_State* L)
+luaopen_shelf(lua_State* L)
 {
     luaL_newlib(L,lib);
     return(1);
