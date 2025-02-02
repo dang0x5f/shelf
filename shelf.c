@@ -11,6 +11,15 @@ win_init(lua_State* L)
 {
     initscr();
     noecho();
+    box(stdscr,0,0);
+
+    return(0);
+}
+
+static int
+addrow(lua_State* L)
+{
+    mvwaddstr(stdscr, lua_tointeger(L,-1), 2, lua_tostring(L,-2));
 
     return(0);
 }
@@ -40,6 +49,7 @@ static const struct luaL_Reg lib [] = {
      { "win_init"  , win_init  }
     ,{ "read_char" , read_char }
     ,{ "win_end"   , win_end   }
+    ,{ "addrow"    , addrow    }
     ,{ NULL        , NULL      }
 };
 
