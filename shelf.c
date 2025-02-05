@@ -17,6 +17,20 @@ win_init(lua_State* L)
 }
 
 static int
+addcolheads(lua_State* L)
+{
+    int x, right;
+    const char* head = lua_tostring(L,-1);
+    size_t len = strlen(head);
+
+    right = 1;
+    for(x = 0; x < len; x++)
+        mvwaddch(stdscr, 1, right++, head[x] | A_REVERSE);
+
+    return(0);
+}
+
+static int
 addrow(lua_State* L)
 {
     mvwaddstr(stdscr, lua_tointeger(L,-1), 2, lua_tostring(L,-2));
@@ -50,6 +64,7 @@ static const struct luaL_Reg lib [] = {
     ,{ "read_char" , read_char }
     ,{ "win_end"   , win_end   }
     ,{ "addrow"    , addrow    }
+    ,{ "addcolheads"    , addcolheads    }
     ,{ NULL        , NULL      }
 };
 
