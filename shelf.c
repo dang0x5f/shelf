@@ -40,7 +40,7 @@ addcolheads(lua_State* L)
     /* printf("%zu\n", headers->size); */
 
 
-    for(x=1;x<=headers->size;x++){
+    for(x=headers->size;x>0;x--){
         /* printf("%s\n", lua_tostring(L, -1 -x)); */
         if(headers->head == NULL){
 
@@ -50,7 +50,7 @@ addcolheads(lua_State* L)
 
         }else{
 
-            struct node_t* iter = headers->head->next;
+            struct node_t* iter = headers->head;
             while(iter->next != NULL)
                 iter = iter->next;
 
@@ -62,8 +62,20 @@ addcolheads(lua_State* L)
     }
 
     
-    right = 1;
-    for(x=0;x<headers->size;x++){
+    right = 2;
+    struct node_t* iter = headers->head;
+    while(1){
+
+        if(iter == NULL)
+            break;
+    
+        int len = strlen(iter->name);
+        for(int i = 0; i < len; i++){
+            mvwaddch(stdscr, 1, right++, iter->name[i] | A_REVERSE);
+        }
+        
+        right += 10;
+        iter = iter->next;
 
     }
 
