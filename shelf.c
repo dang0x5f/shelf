@@ -34,15 +34,37 @@ addcolheads(lua_State* L)
     int x, right;
 
     headers = malloc(sizeof(struct linked_list));
+    headers->head = NULL;
     headers->size = lua_tointeger(L,-1);
 
     /* printf("%zu\n", headers->size); */
 
 
-    right = 1;
     for(x=1;x<=headers->size;x++){
         /* printf("%s\n", lua_tostring(L, -1 -x)); */
-        
+        if(headers->head == NULL){
+
+            headers->head = malloc(sizeof(struct node_t));
+            headers->head->name = lua_tostring(L,-1-x);
+            headers->head->next = NULL;
+
+        }else{
+
+            struct node_t* iter = headers->head->next;
+            while(iter->next != NULL)
+                iter = iter->next;
+
+            iter->next = malloc(sizeof(struct node_t));
+            iter->next->name = lua_tostring(L,-1-x);            
+            iter->next->next = NULL;
+
+        }
+    }
+
+    
+    right = 1;
+    for(x=0;x<headers->size;x++){
+
     }
 
     /* int x, right; */
