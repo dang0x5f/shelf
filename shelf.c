@@ -6,6 +6,18 @@
 #include "lua.h"
 #include "lauxlib.h"
 
+struct node_t {
+    const char* name;
+    struct node_t* next;
+};
+
+struct linked_list {
+    struct node_t* head;
+    size_t size;
+};
+
+static struct linked_list* headers;
+
 static int
 win_init(lua_State* L)
 {
@@ -20,12 +32,26 @@ static int
 addcolheads(lua_State* L)
 {
     int x, right;
-    const char* head = lua_tostring(L,-1);
-    size_t len = strlen(head);
+
+    headers = malloc(sizeof(struct linked_list));
+    headers->size = lua_tointeger(L,-1);
+
+    /* printf("%zu\n", headers->size); */
+
 
     right = 1;
-    for(x = 0; x < len; x++)
-        mvwaddch(stdscr, 1, right++, head[x] | A_REVERSE);
+    for(x=1;x<=headers->size;x++){
+        /* printf("%s\n", lua_tostring(L, -1 -x)); */
+        
+    }
+
+    /* int x, right; */
+    /* const char* head = lua_tostring(L,-1); */
+    /* size_t len = strlen(head); */
+
+    /* right = 1; */
+    /* for(x = 0; x < len; x++) */
+    /*     mvwaddch(stdscr, 1, right++, head[x] | A_REVERSE); */
 
     return(0);
 }
