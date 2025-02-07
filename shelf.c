@@ -114,6 +114,21 @@ read_char(lua_State* L)
 static int
 win_end(lua_State* L)
 {
+    struct node_t* current = headers->head;
+
+    if(current == NULL){
+        free(headers);
+        return(0);
+    }
+
+    struct node_t* next = current->next;
+    do{
+        free(current);
+        current = next;
+        if(current != NULL)
+            next = current->next;
+    }while(current != NULL);
+
     endwin();
 
     return(0);
