@@ -6,6 +6,8 @@
 #include "lua.h"
 #include "lauxlib.h"
 
+static int drawheaders(void);
+
 struct node_t {
     const char* name;
     struct node_t* next;
@@ -31,7 +33,7 @@ win_init(lua_State* L)
 static int
 addcolheads(lua_State* L)
 {
-    int x, right;
+    int x;
 
     headers = malloc(sizeof(struct linked_list));
     headers->head = NULL;
@@ -61,8 +63,23 @@ addcolheads(lua_State* L)
         }
     }
 
-    
-    right = 2;
+    drawheaders();
+
+    /* int x, right; */
+    /* const char* head = lua_tostring(L,-1); */
+    /* size_t len = strlen(head); */
+
+    /* right = 1; */
+    /* for(x = 0; x < len; x++) */
+    /*     mvwaddch(stdscr, 1, right++, head[x] | A_REVERSE); */
+
+    return(0);
+}
+
+static int
+drawheaders(void)
+{
+    int right = 2;
     struct node_t* iter = headers->head;
     while(1){
 
@@ -78,14 +95,6 @@ addcolheads(lua_State* L)
         iter = iter->next;
 
     }
-
-    /* int x, right; */
-    /* const char* head = lua_tostring(L,-1); */
-    /* size_t len = strlen(head); */
-
-    /* right = 1; */
-    /* for(x = 0; x < len; x++) */
-    /*     mvwaddch(stdscr, 1, right++, head[x] | A_REVERSE); */
 
     return(0);
 }
