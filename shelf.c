@@ -88,7 +88,7 @@ drawheaders(void)
     
         int len = strlen(iter->name);
         for(int i = 0; i < len; i++){
-            mvwaddch(stdscr, 1, right++, iter->name[i] | A_REVERSE);
+            mvwaddch(stdscr, 1, right++, iter->name[i] | A_UNDERLINE);
         }
         
         right += 10;
