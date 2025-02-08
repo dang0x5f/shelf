@@ -6,7 +6,7 @@
 #include "lua.h"
 #include "lauxlib.h"
 
-static int drawheaders(void);
+static int write_fields(void);
 
 struct node_t {
     const char* name;
@@ -25,13 +25,15 @@ win_init(lua_State* L)
 {
     initscr();
     noecho();
+    curs_set(0);
     box(stdscr,0,0);
 
     return(0);
 }
 
+/* add_fields(var1 , var2 , ... , numofvars) */
 static int
-addcolheads(lua_State* L)
+add_fields(lua_State* L)
 {
     int x;
 
@@ -39,11 +41,8 @@ addcolheads(lua_State* L)
     headers->head = NULL;
     headers->size = lua_tointeger(L,-1);
 
-    /* printf("%zu\n", headers->size); */
-
-
     for(x=headers->size;x>0;x--){
-        /* printf("%s\n", lua_tostring(L, -1 -x)); */
+
         if(headers->head == NULL){
 
             headers->head = malloc(sizeof(struct node_t));
@@ -63,21 +62,13 @@ addcolheads(lua_State* L)
         }
     }
 
-    drawheaders();
-
-    /* int x, right; */
-    /* const char* head = lua_tostring(L,-1); */
-    /* size_t len = strlen(head); */
-
-    /* right = 1; */
-    /* for(x = 0; x < len; x++) */
-    /*     mvwaddch(stdscr, 1, right++, head[x] | A_REVERSE); */
+    write_fields();
 
     return(0);
 }
 
 static int
-drawheaders(void)
+write_fields(void)
 {
     int right = 2;
     struct node_t* iter = headers->head;
@@ -100,7 +91,7 @@ drawheaders(void)
 }
 
 static int
-addrow(lua_State* L)
+add_record(lua_State* L)
 {
     mvwaddstr(stdscr, lua_tointeger(L,-1), 2, lua_tostring(L,-2));
 
@@ -144,12 +135,12 @@ win_end(lua_State* L)
 }
 
 static const struct luaL_Reg lib [] = {
-     { "win_init"  , win_init  }
-    ,{ "read_char" , read_char }
-    ,{ "win_end"   , win_end   }
-    ,{ "addrow"    , addrow    }
-    ,{ "addcolheads"    , addcolheads    }
-    ,{ NULL        , NULL      }
+     { "win_init"   , win_init   }
+    ,{ "read_char"  , read_char  }
+    ,{ "win_end"    , win_end    }
+    ,{ "add_record" , add_record }
+    ,{ "add_fields" , add_fields }
+    ,{ NULL         , NULL       }
 };
 
 int 
