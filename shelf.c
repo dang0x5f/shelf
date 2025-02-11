@@ -19,6 +19,42 @@ win_init(lua_State* L)
     return(0);
 }
 
+static int 
+debug(lua_State* L)
+{
+    list_t* tbl_head;
+    /* list_t rec_data; */
+
+
+    field_t* field1 = malloc(sizeof(field_t));
+    field1->name = "Daniel";
+
+    field_t* field2 = malloc(sizeof(field_t));
+    field2->name = "Peter";
+
+    field_t* field3 = malloc(sizeof(field_t));
+    field3->name = "Gehrz";
+
+    field1->next = field2;
+    field2->next = field3;
+    field3->next = NULL;
+
+    tbl_head = malloc(sizeof(list_t));
+    tbl_head->count = 3;
+
+    tbl_head->head.field_node = field1;
+
+    field_t* iter = tbl_head->head.field_node;
+    while(iter != NULL){
+        printf("%s\n", iter->name);
+        iter = iter->next;
+    }
+
+    free(tbl_head);
+
+    return(0);
+}
+
 /* add_fields(var1 , var2 , ... , numofvars) */
 static int
 add_fields(lua_State* L)
@@ -134,6 +170,7 @@ static const struct luaL_Reg lib [] = {
     ,{ "win_end"    , win_end    }
     ,{ "add_record" , add_record }
     ,{ "add_fields" , add_fields }
+    ,{ "debug" , debug }
     ,{ NULL         , NULL       }
 };
 
