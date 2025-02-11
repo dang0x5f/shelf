@@ -27,13 +27,13 @@ debug(lua_State* L)
 
 
     field_t* field1 = malloc(sizeof(field_t));
-    field1->name = "Daniel";
+    field1->name = "1 fish , 2 fish";
 
     field_t* field2 = malloc(sizeof(field_t));
-    field2->name = "Peter";
+    field2->name = "red fish";
 
     field_t* field3 = malloc(sizeof(field_t));
-    field3->name = "Gehrz";
+    field3->name = "blue fish";
 
     field1->next = field2;
     field2->next = field3;
@@ -83,6 +83,20 @@ add_fields(lua_State* L)
     }
 
     write_fields();
+
+    return(0);
+}
+
+static int 
+add_field_lens(lua_State* L)
+{
+    int index = -1, count = -1;
+
+    count = lua_tointeger(L,index);
+    
+    while(count--){
+        printf("%lld\n", lua_tointeger(L,--index));
+    }
 
     return(0);
 }
@@ -162,7 +176,8 @@ static const struct luaL_Reg lib [] = {
     ,{ "win_end"    , win_end    }
     ,{ "add_record" , add_record }
     ,{ "add_fields" , add_fields }
-    ,{ "debug" , debug }
+    ,{ "add_field_lens" , add_field_lens }
+    /* ,{ "debug" , debug } */
     ,{ NULL         , NULL       }
 };
 
