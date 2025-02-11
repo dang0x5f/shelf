@@ -59,8 +59,28 @@ debug(lua_State* L)
 static int
 add_fields(lua_State* L)
 {
+    int x;
+
+    header_list = malloc(sizeof(list_t));
+    header_list->len = lua_tointeger(L,-1);
+    header_list->head.field_node = NULL;
     /* int x; */
 
+    for(x = header_list->len; x>0; x--){
+        if(header_list->head.field_node == NULL){
+            header_list->head.field_node = malloc(sizeof(field_t));
+            header_list->head.field_node->name = lua_tostring(L,-1-x);
+            header_list->head.field_node->next = NULL;
+        }else{
+            field_t* iter = header_list->head.field_node;
+            while(iter->next != NULL)
+                iter = iter->next;
+
+            iter->next = malloc(sizeof(field_t));
+            iter->next->name = lua-tostring(L,-1-x);
+            iter->next->next = NULL;
+        }
+    }
     /* headers = malloc(sizeof(struct linked_list)); */
     /* headers->head = NULL; */
     /* headers->size = lua_tointeger(L,-1); */

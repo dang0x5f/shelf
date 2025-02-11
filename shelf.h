@@ -27,7 +27,7 @@ typedef struct linked_list {
     size_t count;
 } list_t;
 
-static struct linked_list* headers;
+static struct linked_list* header_list;
 
 static int win_init(lua_State*);
 static int read_char(lua_State*);
