@@ -8,8 +8,14 @@
 //     size_t size;
 // };
 
+typedef struct rowcelldata {
+    const char* value;
+    struct rowcelldata* next;
+} rowcelldata_t;
+
 typedef struct record {
-    int x;
+    WINDOW* row;    
+    rowcelldata_t* head;
 } record_t;
 
 typedef struct field {
