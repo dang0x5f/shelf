@@ -34,6 +34,7 @@ static int read_char(lua_State*);
 static int win_end(lua_State*);
 
 static int add_fields(lua_State*);
+static int add_field(lua_State*);
 static int add_field_lens(lua_State*);
 static int write_fields(void);
 static int add_record(lua_State*);

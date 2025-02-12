@@ -55,6 +55,38 @@ debug(lua_State* L)
     return(0);
 }
 
+static int
+add_field(lua_State* L)
+{
+    if(header_list == NULL){
+        header_list = malloc(sizeof(list_t));
+        header_list->len = 0;
+        header_list->head.field_node = NULL;
+    }
+
+    if(header_list->head.field_node == NULL){
+        header_list->head.field_node = malloc(sizeof(field_t));
+        header_list->head.field_node->len = lua_tointeger(L,-1);
+        header_list->head.field_node->name = lua_tostring(L,-2);
+        header_list->head.field_node->next = NULL;
+        header_list->len += 1;
+    }else{
+        field_t* iter = header_list->head.field_node;
+        while(iter->next){
+            printf("%s\n", iter->next->name);
+            iter = iter->next;
+        }
+
+        iter->next = malloc(sizeof(field_t)); 
+        iter->next->len = lua_tointeger(L,-1);
+        iter->next->name = lua_tostring(L,-2);
+        iter->next->next = NULL;
+        header_list->len += 1;
+    }
+
+    return(0);
+}
+
 /* add_fields(var1 , var2 , ... , numofvars) */
 static int
 add_fields(lua_State* L)
@@ -175,6 +207,7 @@ static const struct luaL_Reg lib [] = {
     ,{ "read_char"  , read_char  }
     ,{ "win_end"    , win_end    }
     ,{ "add_record" , add_record }
+    ,{ "add_field" , add_field }
     ,{ "add_fields" , add_fields }
     ,{ "add_field_lens" , add_field_lens }
     /* ,{ "debug" , debug } */
