@@ -153,6 +153,14 @@ write_fields(void)
 }
 
 static int
+draw(lua_State* L)
+{
+    write_fields();
+
+    return(0);
+}
+
+static int
 add_record(lua_State* L)
 {
     /* mvwaddstr(stdscr, lua_tointeger(L,-1), 2, lua_tostring(L,-2)); */
@@ -207,6 +215,7 @@ static const struct luaL_Reg lib [] = {
     ,{ "read_char"  , read_char  }
     ,{ "win_end"    , win_end    }
     ,{ "add_record" , add_record }
+    ,{ "draw" , draw }
     ,{ "add_field" , add_field }
     ,{ "add_fields" , add_fields }
     ,{ "add_field_lens" , add_field_lens }

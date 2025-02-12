@@ -39,5 +39,6 @@ static int add_field_lens(lua_State*);
 static int write_fields(void);
 static int add_record(lua_State*);
 static int write_record(void);
+static int draw(lua_State*);
 
 static int debug(lua_State*);
