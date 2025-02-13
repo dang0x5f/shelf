@@ -1,12 +1,5 @@
-// struct node_t {
-//     const char* name;
-//     struct node_t* next;
-// };
-
-// struct linked_list {
-//     struct node_t* head;
-//     size_t size;
-// };
+#ifndef SHELF_LIFE
+#define SHELF_LIFE
 
 typedef struct rowcelldata {
     const char* value;
@@ -15,7 +8,7 @@ typedef struct rowcelldata {
 
 typedef struct record {
     WINDOW* row;    
-    rowcelldata_t* head;
+    rowcelldata_t* cells;
 } record_t;
 
 typedef struct field {
@@ -33,7 +26,8 @@ typedef struct linked_list {
     size_t count;
 } list_t;
 
-static struct linked_list* header_list;
+static list_t* header_list;
+static list_t* records_list;
 
 static int win_init(lua_State*);
 static int read_char(lua_State*);
@@ -48,3 +42,5 @@ static int write_record(void);
 static int draw(lua_State*);
 
 static int debug(lua_State*);
+
+#endif

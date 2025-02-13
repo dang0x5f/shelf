@@ -163,7 +163,28 @@ draw(lua_State* L)
 static int
 add_record(lua_State* L)
 {
+    int count = 0;
     /* mvwaddstr(stdscr, lua_tointeger(L,-1), 2, lua_tostring(L,-2)); */
+    if(records_list == NULL){
+        records_list = malloc(sizeof(list_t));
+        records_list->len = 0;
+        records_list->head.record_node = NULL;
+    }        
+
+    if(records_list->head.record_node == NULL){
+        records_list->head.record_node = malloc(sizeof(record_t));
+        records_list->head.record_node->row = newpad(1,getmaxx(stdscr)-2);
+        records_list->head.record_node->cells = malloc(sizeof(rowcelldata_t));
+        
+        count = lua_tointeger(L,-1);
+        while(count){
+            records_list->head.record_node->cells->value = lua_tostring(L,-1-count);
+            records_list->head.record_node->cells->next = NULL;
+            count--;
+        }
+    }else{
+
+    }
 
     return(0);
 }
