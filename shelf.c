@@ -183,7 +183,20 @@ add_record(lua_State* L)
             count--;
         }
     }else{
+        record_t* iter = records_list->head.record_node;
+        while(iter)
+            iter = iter->next;
+        
+        iter = malloc(sizeof(record_t));
+        iter->row = newpad(1,getmaxx(stdscr)-2);
+        iter->cells = malloc(sizeof(rowcelldata_t));
 
+        count = lua_tointeger(L,-1);
+        while(count){
+            iter->cells->value = lua_tostring(L,-1-count);
+            iter->cells->next = NULL;
+            count--;
+        }
     }
 
     return(0);

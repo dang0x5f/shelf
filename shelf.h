@@ -9,6 +9,7 @@ typedef struct rowcelldata {
 typedef struct record {
     WINDOW* row;    
     rowcelldata_t* cells;
+    struct record* next;
 } record_t;
 
 typedef struct field {
